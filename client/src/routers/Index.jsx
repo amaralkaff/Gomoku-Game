@@ -4,7 +4,7 @@ import Game from '../views/Game';
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Game />
+        element: <Game />,
     }
 ])
 
