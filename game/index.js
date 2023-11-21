@@ -134,8 +134,8 @@ class Gomoku {
           }
 
           // if move is valid, do the following
-          this.#turn++;
           this.#board[i][j] = this.#getNextPlayer();
+          this.#turn++;
           if (this.#checkWin(x, y)) {
             this.#isFinished = true;
             return true;
@@ -154,17 +154,16 @@ class Gomoku {
   }
 }
 
-const game = new Gomoku();
-game.move(0, 1);
+// const game = new Gomoku();
 // game.move(0, 1);
-game.move(8, 8);
-game.move(1, 1);
-game.move(8, 7);
-game.move(2, 1);
-game.move(8, 6);
-game.move(3, 1);
-game.move(8, 5);
-game.move(4, 1);
-console.log(game.status);
+// game.move(8, 8);
+// game.move(1, 1);
+// game.move(8, 7);
+// game.move(2, 1);
+// game.move(8, 6);
+// game.move(3, 1);
+// game.move(8, 5);
+// game.move(4, 1);
+// console.log(game.status);
 
-module.exports = Gomoku;
+export default Gomoku;

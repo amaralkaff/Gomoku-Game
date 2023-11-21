@@ -1,14 +1,21 @@
 /* src/index.css */
-/* @import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities'; */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* .board-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
 
 .board {
   display: grid;
-  height: 1000px;
-  width: 1000px;
+  height: 600px;
+  width: 600px;
   grid-template-columns: repeat(15, 1fr);
-  grid-template-rows: repeat(15, 1fr); 
+  grid-template-rows: repeat(15, 1fr);
   gap: 0;
 }
 
@@ -19,4 +26,4 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
