@@ -3,10 +3,17 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities'; */
 
+.board-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
 .board {
   display: grid;
-  height: 1000px;
-  width: 1000px;
+  height: 600px;
+  width: 600px;
   grid-template-columns: repeat(15, 1fr);
   grid-template-rows: repeat(15, 1fr); /* Creates 15 rows */
   gap: 0; /* Adjust if you want space between cells */
