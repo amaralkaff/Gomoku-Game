@@ -42,7 +42,16 @@ class Gomoku {
             lastPlayer: this.#getLastPlayer(),
             nextPlayer: this.#getNextPlayer(),
             status: this.#isFinished ? "Finished" : "Ongoing",
+            winner: this.#getWinner(),
         };
+    }
+
+    #getWinner() {
+        if (!this.#isFinished) return undefined;
+        if (this.#turn == this.#SIZE * this.#SIZE + 1) {
+            return "Draw";
+        }
+        return this.#getLastPlayer();
     }
 
     #getLastPlayer() {
@@ -79,6 +88,12 @@ class Gomoku {
      * (if a win is found) or false (if a win is not found).
      */
     #checkWin(x, y) {
+        // check draw
+        if (this.#turn == this.#SIZE * this.#SIZE + 1) {
+            this.#isFinished = true;
+            return true;
+        }
+
         // vertical
         for (let i = 0; i < this.#SIZE - 4; i++) {
             if (
@@ -110,14 +125,14 @@ class Gomoku {
         return false;
     }
 
-    /* returns true if the next move results in a win, false otherwise */
+    /* returns true if the next move results in a win (or draw), false otherwise */
     move(x, y) {
         if (this.#isFinished) throw new Error("Game is finished");
 
         for (let i = 0; i < this.#SIZE; i++) {
             for (let j = 0; j < this.#SIZE; j++) {
                 if (i === x && j === y) {
-                    // move validation (can't occupy the same square twice)
+                    // move validation
                     if (this.#board[i][j]) {
                         throw new Error(
                             `Square (${i}, ${j}) is already occupied by ${this.#board[i][j]}`
@@ -152,6 +167,6 @@ class Gomoku {
 // game.move(3, 1);
 // game.move(8, 5);
 // game.move(4, 1);
-// console.log(game.status);
+// console.log(game.status.winner);
 
 export default Gomoku;

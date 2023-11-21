@@ -8,6 +8,7 @@ export default function Game() {
     const [gameStatus, setGameStatus] = useState({ ...game.status });
     function onSquareClick(i, j) {
         game.move(i, j);
+        console.log(game.status.winner);
         setGameStatus({ ...game.status });
     }
 
