@@ -55,6 +55,7 @@ class Gomoku {
     }
 
     #getNextPlayer() {
+        if (this.#isFinished) return;
         if (this.#turn % 2 == 0) {
             return "O";
         } else {
@@ -114,16 +115,20 @@ class Gomoku {
         for (let i = 0; i < this.#SIZE; i++) {
             for (let j = 0; j < this.#SIZE; j++) {
                 if (i === x && j === y) {
-                    // TODO: move validation
-                    // ...
+                    // move validation (can't occupy the same square twice)
+                    if (this.#board[i][j]) {
+                        throw new Error(
+                            `Square (${i}, ${j}) is already occupied by ${this.#board[i][j]}`
+                        );
+                    }
 
                     // if move is valid, do the following
+                    this.#turn++;
                     this.#board[i][j] = this.#getNextPlayer();
                     if (this.#checkWin(x, y)) {
                         this.#isFinished = true;
                         return true;
                     }
-                    this.#turn++;
                 }
             }
         }
@@ -140,14 +145,15 @@ class Gomoku {
 
 const game = new Gomoku();
 game.move(0, 1);
+// game.move(0, 1);
 game.move(8, 8);
 game.move(1, 1);
-game.move(8, 8);
+game.move(8, 7);
 game.move(2, 1);
-game.move(8, 8);
+game.move(8, 6);
 game.move(3, 1);
-game.move(8, 8);
-// game.move(4, 1);
+game.move(8, 5);
+game.move(4, 1);
 console.log(game.status);
 
 module.exports = Gomoku;
