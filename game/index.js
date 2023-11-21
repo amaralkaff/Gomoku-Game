@@ -138,16 +138,16 @@ class Gomoku {
     }
 }
 
-// const game = new Gomoku();
-// game.move(0, 1);
-// game.move(8, 8);
-// game.move(1, 1);
-// game.move(8, 8);
-// game.move(2, 1);
-// game.move(8, 8);
-// game.move(3, 1);
-// game.move(8, 8);
+const game = new Gomoku();
+game.move(0, 1);
+game.move(8, 8);
+game.move(1, 1);
+game.move(8, 8);
+game.move(2, 1);
+game.move(8, 8);
+game.move(3, 1);
+game.move(8, 8);
 // game.move(4, 1);
-// console.log(game.status);
+console.log(game.status);
 
 module.exports = Gomoku;
