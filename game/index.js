@@ -88,6 +88,7 @@ class Gomoku {
                 this.#board[i + 3][y] === this.#board[i][y] &&
                 this.#board[i + 4][y] === this.#board[i][y]
             ) {
+                this.#isFinished = true;
                 return true;
             }
         }
@@ -100,6 +101,7 @@ class Gomoku {
                 this.#board[x][i + 3] === this.#board[x][i] &&
                 this.#board[x][i + 4] === this.#board[x][i]
             ) {
+                this.#isFinished = true;
                 return true;
             }
         }
@@ -125,10 +127,7 @@ class Gomoku {
                     // if move is valid, do the following
                     this.#board[i][j] = this.#getNextPlayer();
                     this.#turn++;
-                    if (this.#checkWin(x, y)) {
-                        this.#isFinished = true;
-                        return true;
-                    }
+                    return this.#checkWin(x, y);
                 }
             }
         }
