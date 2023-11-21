@@ -1,22 +1,29 @@
 /* src/index.css */
-/* @import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities'; */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* .board-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
 
 .board {
   display: grid;
-  height: 1000px;
-  width: 1000px;
+  height: 600px;
+  width: 600px;
   grid-template-columns: repeat(15, 1fr);
-  grid-template-rows: repeat(15, 1fr); /* Creates 15 rows */
-  gap: 0; /* Adjust if you want space between cells */
+  grid-template-rows: repeat(15, 1fr);
+  gap: 0;
 }
 
 .cell {
   margin: 0;
   padding: 0;
-  border: 1px solid gray; /* Border for each cell */
+  border: 1px solid gray;
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
