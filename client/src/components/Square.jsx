@@ -1,5 +1,5 @@
-export default function Square({ player }) {
+export default function Square({ player, onSquareClick }) {
     return (<>
-    <div className="border-2 flex justify-center items-center">{player}</div>
+    <button onClick={onSquareClick} className="border-2 flex justify-center items-center">{player}</button>
     </>)
 }

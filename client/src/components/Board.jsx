@@ -2,33 +2,19 @@ import React from "react";
 import "../index.css";
 import Square from "./Square";
 
-const Board = () => {
-  const gameBoard = [
-    [ null, 'X',  null, null, null, null, null, null, null, null, null, null, null, null, null ],
-    [ null, 'X',  null, null, null, null, null, null, null, null, null, null, null, null, null ],
-    [ null, 'X',  null, null, null, null, null, null, null, null, null, null, null, null, null ],
-    [ null, 'X',  null, null, null, null, null, null, null, null, null, null, null, null, null ],
-    [ null, null, null, null, null, null, null, null, null, null, null, null, null, null, null ],
-    [ null, null, null, null, null, null, null, null, null, null, null, null, null, null, null ],
-    [ null, null, null, null, null, null, null, null, null, null, null, null, null, null, null ],
-    [ null, null, null, null, null, null, null, null, null, null, null, null, null, null, null ],
-    [ null, null, null, null, null, null, null, null, 'O',  null, null, null, null, null, null ],
-    [ null, null, null, null, null, null, null, null, null, null, null, null, null, null, null ],
-    [ null, null, null, null, null, null, null, null, null, null, null, null, null, null, null ],
-    [ null, null, null, null, null, null, null, null, null, null, null, null, null, null, null ],
-    [ null, null, null, null, null, null, null, null, null, null, null, null, null, null, null ],
-    [ null, null, null, null, null, null, null, null, null, null, null, null, null, null, null ],
-    [ null, null, null, null, null, null, null, null, null, null, null, null, null, null, null ]
-  ];
-
+function Board({ game, onSquareClick }) {
+  console.log(game)
   return (
-    <div className="flex justify-center items-center w-screen">
-      <div className="border-2 grid grid-cols-[repeat(15,1fr)] grid-rows-[repeat(15,1fr)] gap-0 w-[500px] h-[500px]">
-        { (() => {
-
-          <Square player="O" />
-        })() }
-      </div>
+    <div className="border-2 grid grid-cols-[repeat(15,1fr)] grid-rows-[repeat(15,1fr)] gap-0 w-[500px] h-[500px]">
+      { game.board.map((row, i) => {
+        return row.map((square, j) => {
+          // if (square) {
+            return <Square key={`${i}-${j}`} player={square} onSquareClick={() => onSquareClick(i, j)} />
+          // } else {
+            // return <Square key={`${i}-${j}`} player="" onSquareClick={() => onSquareClick(i, j)} />
+          // }
+        })
+      }) }
     </div>
   );
 };
