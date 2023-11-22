@@ -19,6 +19,20 @@ export const gomokuSlice = createSlice({
       const SIZE = 15;
       const { x, y } = action.payload;
 
+      // Update Firebase
+      set(ref(database, "gomokuGame"), {
+        // board: state.board,
+        turn: state.turn,
+        isFinished: state.isFinished,
+        lastMove: state.lastMove,
+      });
+
+      const upMove = ref(database, "gomokuGame");
+      onValue(upMove, (snapshot) => {
+        const data = snapshot.val();
+        console.log(data);
+      });
+
       if (state.isFinished) throw new Error("Game is finished");
       if (state.board[x][y]) {
         throw new Error(`Square (${x}, ${y}) is already occupied`);
@@ -32,14 +46,6 @@ export const gomokuSlice = createSlice({
       if (checkWin(state.board, x, y, SIZE) || state.turn > SIZE * SIZE) {
         state.isFinished = true;
       }
-
-      // Update Firebase
-      set(ref(database, "gomokuGame"), {
-        board: state.board,
-        turn: state.turn,
-        isFinished: state.isFinished,
-        lastMove: state.lastMove,
-      });
     },
     updateGameState: (state, action) => {
       return { ...state, ...action.payload };

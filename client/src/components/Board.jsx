@@ -1,6 +1,8 @@
 //components/Board.jsx
 import React from "react";
 import "../index.css";
+import { ref, set, onValue } from "firebase/database";
+import { database } from "../firebase/firebaseConfig";
 
 // redux
 import { useSelector, useDispatch } from "react-redux";
@@ -13,7 +15,13 @@ function Board() {
   const lastMove = useSelector((state) => state.gomoku.lastMove);
   const dispatch = useDispatch();
 
-  console.log(lastMove);
+  // fetch data from firebase
+  const upMove = ref(database, "gomokuGame");
+  onValue(upMove, (snapshot) => {
+    const data = snapshot.val();
+    // console.log(data.lastMove);
+    // dispatch(onSquareClick(data.lastMove));
+  });
 
   return (
     <div className="border-2 grid grid-cols-[repeat(15,1fr)] grid-rows-[repeat(15,1fr)] gap-0 w-[525px] h-[525px]">
