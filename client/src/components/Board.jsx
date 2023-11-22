@@ -26,6 +26,7 @@ function Board() {
     });
   }
 
+  // fetch data only if it's after the opponent's move
   const currPlayer = localStorage.getItem("user_id");
   if (currPlayer == "p1" && turn % 2 == 0) {
     fetchDataFromFB();
