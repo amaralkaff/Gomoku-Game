@@ -44,6 +44,29 @@ function Board() {
   } else if (currPlayer == "p2" && turn % 2 != 0) {
     fetchDataFromFB();
   }
+  
+    //
+  const getPieceStyle = (piece) => {
+    switch (piece) {
+      case "X":
+        return "bg-black text-white";
+      case "O":
+        return "bg-white text-black";
+      default:
+        return "";
+    }
+  };
+
+  //
+  const boardStyle =
+    "grid grid-cols-[repeat(15,1fr)] grid-rows-[repeat(15,1fr)] gap-1 w-[525px] h-[525px] transform rotate-x-[45deg] rotate-z-[45deg] shadow-xl";
+  const squareStyle = "border border-gray-400 rounded-full bg-wood-texture";
+  const pieceStyle = (piece) =>
+    ({
+      X: "bg-black w-6 h-6 rounded-full mx-auto mt-1 shadow-lg",
+      O: "bg-white w-6 h-6 rounded-full mx-auto mt-1 shadow-lg",
+    }[piece] || "");
+
 
   return (<>
     { waiting && (
@@ -51,25 +74,24 @@ function Board() {
     ) }
 
     { !waiting && (
-      <div className="perspective[1000px] perspective-origin[50% 100%]">
-        <div className="grid grid-cols-[repeat(15,1fr)] grid-rows-[repeat(15,1fr)] gap-0 w-[525px] h-[525px] transform rotate-x-[45deg] rotate-z-[45deg] shadow-2xl">
-          {board.map((row, x) => {
-            return row.map((square, y) => {
-              return (
-                <button
-                  key={`${x}-${y}`}
-                  onClick={() => dispatch(onSquareClick({ x, y }))}
-                  disabled={disabled}
-                  className="border border-gray-400 hover:bg-gray-200 transition duration-300 ease-in-out transform hover:scale-110"
-                >
-                  {square}
-                </button>
-              );
-            });
-          })}
-        </div>
-      </div>
-    ) }
+     <div className="perspective[1000px] perspective-origin[50% 50%] transition-transform duration-700 ease-in-out">
+      <div className={boardStyle}>
+        {board.map((row, x) =>
+          row.map((square, y) => (
+            <button
+              key={`${x}-${y}`}
+              onClick={() => dispatch(onSquareClick({ x, y }))}
+              disabled={disabled}
+              className={`${squareStyle} ${getPieceStyle(square)}`}
+            >
+              {square && (
+                <div className={pieceStyle(square)}>
+                  <span className="sr-only">{square}</span>
+                </div>
+              )}
+            </button>
+          ))
+        )}
   </>);
 }
 
