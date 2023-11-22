@@ -4,11 +4,11 @@ import Home from "../views/Home";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/game",
     element: <Game />,
   },
   {
-    path: "/home",
+    path: "/",
     element: <Home />,
   },
 ]);
