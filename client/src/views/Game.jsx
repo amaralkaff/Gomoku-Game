@@ -2,17 +2,35 @@ import { useEffect } from "react";
 import Board from "../components/Board";
 
 // redux
-import { useDispatch, useSelector } from "react-redux";
-import { reset } from "../slices/gomokuSlice";
+import { useSelector } from "react-redux";
+
+// firebase
+import { database } from "../firebase/firebaseConfig";
+import { ref, update } from "firebase/database";
 
 export default function Game() {
-  const isFinished = useSelector((state) => state.gomoku.isFinished);
-  const turn = useSelector((state) => state.gomoku.turn);
-  const dispatch = useDispatch();
+  // const isFinished = useSelector((state) => state.gomoku.isFinished);
+  // const turn = useSelector((state) => state.gomoku.turn);
+  const { turn, isFinished, board, lastMoveByX, lastMoveByO, disabled } = useSelector((state) => state.gomoku);
+
+
+  // check if connected
+  function setStatusConnected(player) {
+    const updates = {};
+    updates[`gomokuGame/${player}/join`] = true;
+    update(ref(database), updates);
+  }
 
   useEffect(() => {
-    dispatch(reset());
-  }, []);
+    const player = localStorage.getItem("user_id");
+    if (player == "p1") {
+      // connected as player 1
+      setStatusConnected("p1");
+    } else if (player == "p2") {
+      // connected as player 2
+      setStatusConnected("p2");
+    }
+  })
 
   return (
     <>
@@ -31,9 +49,9 @@ export default function Game() {
                   <h2 className="text-3xl font-bold text-gray-800 mb-3">
                     {turn === 0 ? "X" : "O"} Won!
                   </h2>
-                  <p className="text-3xl font-bold text-gray-800 mb-3">
+                  {/* <p className="text-3xl font-bold text-gray-800 mb-3">
                     {turn === 0 ? "O" : "X"} Lost!
-                  </p>
+                  </p> */}
                 </div>
               </>
             )}

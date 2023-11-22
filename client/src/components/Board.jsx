@@ -5,12 +5,14 @@ import { database } from "../firebase/firebaseConfig";
 
 // redux
 import { useSelector, useDispatch } from "react-redux";
-import { onSquareClick } from "../slices/gomokuSlice";
+import { onSquareClick, setWaiting } from "../slices/gomokuSlice";
+import { useEffect } from "react";
 
 function Board() {
   const disabled = useSelector((state) => state.gomoku.disabled);
   const turn = useSelector((state) => state.gomoku.turn);
   const board = useSelector((state) => state.gomoku.board);
+  const waiting = useSelector(state => state.gomoku.waiting);
   const dispatch = useDispatch();
 
   // fetch data from firebase
@@ -26,6 +28,15 @@ function Board() {
     });
   }
 
+  
+  const upMove = ref(database, "gomokuGame");
+  onValue(upMove, (snapshot) => {
+    const data = snapshot.val();
+    if (data.p2.join == true) {
+      dispatch(setWaiting());
+    }
+  })
+
   // fetch data only if it's after the opponent's move
   const currPlayer = localStorage.getItem("user_id");
   if (currPlayer == "p1" && turn % 2 == 0) {
@@ -33,8 +44,8 @@ function Board() {
   } else if (currPlayer == "p2" && turn % 2 != 0) {
     fetchDataFromFB();
   }
-
-  //
+  
+    //
   const getPieceStyle = (piece) => {
     switch (piece) {
       case "X":
@@ -56,8 +67,14 @@ function Board() {
       O: "bg-white w-6 h-6 rounded-full mx-auto mt-1 shadow-lg",
     }[piece] || "");
 
-  return (
-    <div className="perspective[1000px] perspective-origin[50% 50%] transition-transform duration-700 ease-in-out">
+
+  return (<>
+    { waiting && (
+      <h1>Waiting for player 2 to join...</h1>
+    ) }
+
+    { !waiting && (
+     <div className="perspective[1000px] perspective-origin[50% 50%] transition-transform duration-700 ease-in-out">
       <div className={boardStyle}>
         {board.map((row, x) =>
           row.map((square, y) => (
@@ -75,9 +92,7 @@ function Board() {
             </button>
           ))
         )}
-      </div>
-    </div>
-  );
+  </>);
 }
 
 export default Board;

@@ -1,7 +1,16 @@
 import { useNavigate } from "react-router-dom";
+import { reset } from "../slices/gomokuSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 
 export default function Home() {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
+
+// reset board back to the beginning before starting the game
+  const dispatch = useDispatch();
+  useEffect(() => {
+      dispatch(reset());
+  }, []);
 
   return (
     <>
