@@ -1,7 +1,6 @@
 //components/Board.jsx
-import React from "react";
 import "../index.css";
-import { ref, set, onValue } from "firebase/database";
+import { ref, onValue } from "firebase/database";
 import { database } from "../firebase/firebaseConfig";
 
 // redux
@@ -9,19 +8,30 @@ import { useSelector, useDispatch } from "react-redux";
 import { onSquareClick } from "../slices/gomokuSlice";
 
 function Board() {
-  const isFinished = useSelector((state) => state.gomoku.isFinished);
+  const disabled = useSelector((state) => state.gomoku.disabled);
   const turn = useSelector((state) => state.gomoku.turn);
   const board = useSelector((state) => state.gomoku.board);
-  const lastMove = useSelector((state) => state.gomoku.lastMove);
   const dispatch = useDispatch();
 
   // fetch data from firebase
-  const upMove = ref(database, "gomokuGame");
-  onValue(upMove, (snapshot) => {
-    const data = snapshot.val();
-    // console.log(data.lastMove);
-    // dispatch(onSquareClick(data.lastMove));
-  });
+  function fetchDataFromFB() {
+    const upMove = ref(database, "gomokuGame");
+    onValue(upMove, (snapshot) => {
+      const data = snapshot.val();
+      if (data.turn % 2 === 0) {
+        dispatch(onSquareClick(data.p1.lastMove));
+      } else {
+        dispatch(onSquareClick(data.p2.lastMove));
+      }
+    });
+  }
+
+  const currPlayer = localStorage.getItem("user_id");
+  if (currPlayer == "p1" && turn % 2 == 0) {
+    fetchDataFromFB();
+  } else if (currPlayer == "p2" && turn % 2 != 0) {
+    fetchDataFromFB();
+  }
 
   return (
     <div className="border-2 grid grid-cols-[repeat(15,1fr)] grid-rows-[repeat(15,1fr)] gap-0 w-[525px] h-[525px]">
@@ -33,6 +43,7 @@ function Board() {
               onClick={() => {
                 dispatch(onSquareClick({ x, y }));
               }}
+              disabled={disabled}
               className="border-2 border-gray-400 hover:bg-gray-200"
             >
               {square}

@@ -8,7 +8,9 @@ const initialState = {
   board: Array(15)
     .fill(null)
     .map(() => Array(15).fill(null)),
-  lastMove: {},
+  lastMoveByX: {},
+  lastMoveByO: {},
+  disabled: false,
 };
 
 export const gomokuSlice = createSlice({
@@ -18,14 +20,6 @@ export const gomokuSlice = createSlice({
     onSquareClick: (state, action) => {
       const SIZE = 15;
       const { x, y } = action.payload;
-
-      // Update Firebase
-      set(ref(database, "gomokuGame"), {
-        // board: state.board,
-        turn: state.turn,
-        isFinished: state.isFinished,
-        lastMove: state.lastMove,
-      });
 
       const upMove = ref(database, "gomokuGame");
       onValue(upMove, (snapshot) => {
@@ -38,14 +32,43 @@ export const gomokuSlice = createSlice({
         throw new Error(`Square (${x}, ${y}) is already occupied`);
       }
 
-      state.lastMove = { x, y };
-      state.board[x][y] = state.turn % 2 === 0 ? "O" : "X";
+      if (state.turn % 2 == 0) {
+        state.board[x][y] = "O";
+        state.lastMoveByO = { x, y };
+      } else {
+        state.board[x][y] = "X";
+        state.lastMoveByX = { x, y };
+      }
       state.turn++;
 
       // Check for win or draw
       if (checkWin(state.board, x, y, SIZE) || state.turn > SIZE * SIZE) {
         state.isFinished = true;
       }
+
+      // check disabled
+      const currPlayer = localStorage.getItem("user_id");
+      if (currPlayer == "p1" && state.turn % 2 == 0) {
+        // fetchDataFromFB();
+        // setDisabled(true);
+        state.disabled = true;
+      } else if (currPlayer == "p2" && state.turn % 2 != 0) {
+        // fetchDataFromFB();
+        // setDisabled(true);
+        state.disabled = true;
+      } else {
+        // setDisabled(false);
+        state.disabled = false;
+      }
+
+      // Update Firebase
+      set(ref(database, "gomokuGame"), {
+        p1: { join: false, lastMove: state.lastMoveByX },
+        p2: { join: false, lastMove: state.lastMoveByO },
+        gameId: 1,
+        status: state.isFinished,
+        turn: state.turn,
+      });
     },
     updateGameState: (state, action) => {
       return { ...state, ...action.payload };
@@ -115,13 +138,13 @@ function checkWin(board, x, y, SIZE) {
 
 export const { onSquareClick, updateGameState } = gomokuSlice.actions;
 
-export const initializeFirebaseListener = (dispatch) => {
-  onValue(ref(database, "gomokuGame"), (snapshot) => {
-    const data = snapshot.val();
-    if (data) {
-      dispatch(updateGameState(data));
-    }
-  });
-};
+// export const initializeFirebaseListener = (dispatch) => {
+//   onValue(ref(database, "gomokuGame"), (snapshot) => {
+//     const data = snapshot.val();
+//     if (data) {
+//       dispatch(updateGameState(data));
+//     }
+//   });
+// };
 
 export default gomokuSlice.reducer;
