@@ -140,6 +140,7 @@ class Gomoku {
                     }
 
                     // if move is valid, do the following
+                    // const newBoard = [ ...this.#board ]
                     this.#board[i][j] = this.#getNextPlayer();
                     this.#turn++;
                     return this.#checkWin(x, y);
@@ -169,4 +170,5 @@ class Gomoku {
 // game.move(4, 1);
 // console.log(game.status.winner);
 
-export default Gomoku;
+const gomoku = new Gomoku();
+export default gomoku;
