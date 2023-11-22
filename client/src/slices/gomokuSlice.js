@@ -53,7 +53,35 @@ export const gomokuSlice = createSlice({
                     }
                 }
                 // diagonal
-                // TODO: ..
+                // left-to-right diagonal (\)
+                for (let i = 0; i < SIZE - 4; i++) {
+                    for (let j = 0; j < SIZE - 4; j++) {
+                        if (
+                            state.board[i][j] &&
+                            state.board[i + 1][j + 1] === state.board[i][j] &&
+                            state.board[i + 2][j + 2] === state.board[i][j] &&
+                            state.board[i + 3][j + 3] === state.board[i][j] &&
+                            state.board[i + 4][j + 4] === state.board[i][j]
+                        ) {
+                            state.isFinished = true;
+                        }
+                    }
+                }
+
+                // right-to-left diagonal (/)
+                for (let i = 0; i < SIZE - 4; i++) {
+                    for (let j = 4; j < SIZE; j++) {
+                        if (
+                            state.board[i][j] &&
+                            state.board[i + 1][j - 1] === state.board[i][j] &&
+                            state.board[i + 2][j - 2] === state.board[i][j] &&
+                            state.board[i + 3][j - 3] === state.board[i][j] &&
+                            state.board[i + 4][j - 4] === state.board[i][j]
+                        ) {
+                            state.isFinished = true;
+                        }
+                    }
+                }
             }
 
             const { x, y } = action.payload;
