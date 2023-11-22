@@ -1,16 +1,18 @@
-// import { useState } from "react";3
+import { useEffect } from "react";
 import Board from "../components/Board";
-// import Gomoku from "../../../game";
 
 // redux
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { reset } from "../slices/gomokuSlice";
 
 export default function Game() {
   const isFinished = useSelector((state) => state.gomoku.isFinished);
   const turn = useSelector((state) => state.gomoku.turn);
-  // const board = useSelector((state) => state.gomoku.board);
+  const dispatch = useDispatch();
 
-  console.log(turn);
+  useEffect(() => {
+    dispatch(reset());
+  }, []);
 
   return (
     <>
