@@ -2,8 +2,7 @@ import { useEffect } from "react";
 import Board from "../components/Board";
 
 // redux
-import { useDispatch, useSelector } from "react-redux";
-import { reset } from "../slices/gomokuSlice";
+import { useSelector } from "react-redux";
 
 // firebase
 import { database } from "../firebase/firebaseConfig";
@@ -14,13 +13,6 @@ export default function Game() {
   // const turn = useSelector((state) => state.gomoku.turn);
   const { turn, isFinished, board, lastMoveByX, lastMoveByO, disabled } = useSelector((state) => state.gomoku);
 
-  const dispatch = useDispatch();
-
-  // reset board back to the beginning before starting the game
-  useEffect(() => {
-    const player = localStorage.getItem("user_id");
-    if (player == "p1") dispatch(reset());
-  }, []);
 
   // check if connected
   function setStatusConnected(player) {
@@ -57,9 +49,9 @@ export default function Game() {
                   <h2 className="text-3xl font-bold text-gray-800 mb-3">
                     {turn === 0 ? "X" : "O"} Won!
                   </h2>
-                  <p className="text-3xl font-bold text-gray-800 mb-3">
+                  {/* <p className="text-3xl font-bold text-gray-800 mb-3">
                     {turn === 0 ? "O" : "X"} Lost!
-                  </p>
+                  </p> */}
                 </div>
               </>
             )}
