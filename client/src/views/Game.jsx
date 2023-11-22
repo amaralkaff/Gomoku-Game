@@ -42,7 +42,7 @@ export default function Game() {
 
   return (
     <>
-      <div className="min-h-screen w-screen flex flex-col justify-center items-center p-5 bg-gradient-to-bl from-gray-300 to-gray-600">
+      <div className="min-h-screen w-screen flex flex-col justify-center items-center p-5 bg-gradient-to-bl from-blue-400 to-indigo-600">
         <div className="bg-white shadow-2xl rounded-xl p-5">
           {/* first 3/4 (main) */}
           <div className="flex justify-center">
@@ -55,10 +55,10 @@ export default function Game() {
               <>
                 <div className="flex justify-center">
                   <h2 className="text-3xl font-bold text-gray-800 mb-3">
-                    {turn === 0 ? "Black" : "White"} wins!
+                    {turn === 0 ? "X" : "O"} Won!
                   </h2>
                   <p className="text-3xl font-bold text-gray-800 mb-3">
-                    {turn === 0 ? "🏆" : "🎉"}
+                    {turn === 0 ? "O" : "X"} Lost!
                   </p>
                 </div>
               </>

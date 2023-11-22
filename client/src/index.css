@@ -27,3 +27,12 @@
   justify-content: center;
   align-items: center;
 } */
+
+/* In your CSS file */
+.x-color {
+  color: #F43F5E; /* Red for X */
+}
+
+.o-color {
+  color: #3F5EFB; /* Blue for O */
+}
