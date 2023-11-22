@@ -92,6 +92,9 @@ function Board() {
             </button>
           ))
         )}
+        </div>
+      </div>
+      ) }
   </>);
 }
 
