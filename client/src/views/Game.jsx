@@ -68,7 +68,9 @@ export default function Game() {
                   </div> */}
 
                   <Link to="/">
-                    <button>back to home</button>
+                    <button className="bg-white text-gray-800 font-bold py-4 mt-4 px-8 border-2 border-gray-500 rounded-lg shadow-xl transition duration-500 ease-in-out transform hover:scale-110 hover:bg-gray-100 hover:border-gray-600 hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-50">
+                      back to home
+                    </button>
                   </Link>
                 </>
               )}
