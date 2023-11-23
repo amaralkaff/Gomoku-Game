@@ -7,13 +7,12 @@ import { database } from "../firebase/firebaseConfig";
 // redux
 import { useSelector, useDispatch } from "react-redux";
 import { onSquareClick, setWaiting } from "../slices/gomokuSlice";
-import { useEffect } from "react";
 
 function Board() {
   const disabled = useSelector((state) => state.gomoku.disabled);
   const turn = useSelector((state) => state.gomoku.turn);
   const board = useSelector((state) => state.gomoku.board);
-  const waiting = useSelector(state => state.gomoku.waiting);
+  const waiting = useSelector((state) => state.gomoku.waiting);
   const dispatch = useDispatch();
 
   // fetch data from firebase
@@ -29,14 +28,13 @@ function Board() {
     });
   }
 
-  
   const upMove = ref(database, "gomokuGame");
   onValue(upMove, (snapshot) => {
     const data = snapshot.val();
     if (data.p2.join == true) {
       dispatch(setWaiting());
     }
-  })
+  });
 
   // fetch data only if it's after the opponent's move
   const currPlayer = localStorage.getItem("user_id");
@@ -45,8 +43,8 @@ function Board() {
   } else if (currPlayer == "p2" && turn % 2 != 0) {
     fetchDataFromFB();
   }
-  
-    //
+
+  //
   const getPieceStyle = (piece) => {
     switch (piece) {
       case "X":
@@ -75,40 +73,39 @@ function Board() {
   const X = "bg-black w-6 h-6 rounded-full mx-auto mt-1 shadow-lg";
   const O = "bg-white w-6 h-6 rounded-full mx-auto mt-1 shadow-lg";
 
+  return (
+    <>
+      {waiting && <h1>Waiting for player 2 to join...</h1>}
 
-  return (<>
-    { waiting && (
-      <h1>Waiting for player 2 to join...</h1>
-    ) }
-
-    { !waiting && (
-     <div className="perspective[1000px] perspective-origin[50% 50%] transition-transform duration-700 ease-in-out">
-      <div className={boardStyle}>
-        {board.map((row, x) =>
-          row.map((square, y) => (
-            <button
-              key={`${x}-${y}`}
-              onClick={() => dispatch(onSquareClick({ x, y }))}
-              disabled={disabled}
-              className={`${squareStyle} ${getPieceStyle(square)}`}
-            >
-              {square && (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  {square === "X" ? (
-                    <div className={X}></div>
-                  ) : (
-                    <div className={O}></div>
+      {!waiting && (
+        <div className="perspective[1000px] perspective-origin[50% 50%] transition-transform duration-700 ease-in-out">
+          <div className={boardStyle}>
+            {board.map((row, x) =>
+              row.map((square, y) => (
+                <button
+                  key={`${x}-${y}`}
+                  onClick={() => dispatch(onSquareClick({ x, y }))}
+                  disabled={disabled}
+                  className={`${squareStyle} ${getPieceStyle(square)}`}
+                >
+                  {square && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      {square === "X" ? (
+                        <div className={X}></div>
+                      ) : (
+                        <div className={O}></div>
+                      )}
+                      <span className="sr-only">{square}</span>
+                    </div>
                   )}
-                  <span className="sr-only">{square}</span>
-                </div>
-              )}
-            </button>
-          ))
-        )}
+                </button>
+              ))
+            )}
+          </div>
         </div>
-      </div>
-      ) }
-  </>);
+      )}
+    </>
+  );
 }
 
 export default Board;
