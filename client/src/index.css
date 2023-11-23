@@ -28,11 +28,235 @@
   align-items: center;
 } */
 
-/* In your CSS file */
-.x-color {
-  color: #F43F5E; /* Red for X */
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
 }
 
-.o-color {
-  color: #3F5EFB; /* Blue for O */
+.typewriter h1 {
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  border-right: .15em solid orange; /* The typewriter cursor */
+  white-space: nowrap; /* Keeps the content on a single line */
+  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+  letter-spacing: .15em; /* Adjust as needed */
+  animation: 
+    typing 3.5s steps(40, end),
+    blink-caret .75s step-end infinite;
 }
+
+.wave-text {
+  display: inline-block;
+}
+
+.wave-text span {
+  display: inline-block;
+  animation-name: wave-animation; 
+  animation-duration: 2s; 
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  transform-origin: bottom center;
+}
+
+@keyframes wave-animation {
+  0%, 40%, 100% { transform: translateY(0) } 
+  20% { transform: translateY(-20px) }
+}
+
+.fade-in-text {
+  animation: fadeIn 3s;
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.neon-text {
+  color: #fff;
+  text-shadow:
+    0 0 5px #fff,
+    0 0 10px #fff,
+    0 0 150px #000,
+    0 0 300px #000;
+}
+
+@keyframes colorChange {
+  0% {
+    color: #000;
+  }
+  10% {
+    color: #fff;
+  }
+  20% {
+    color: #000;
+  }
+  30% {
+    color: #fff;
+  }
+  40% {
+    color: #000;
+  }
+  50% {
+    color: #fff;
+  }
+  60% {
+    color: #000;
+  }
+  70% {
+    color: #fff;
+  }
+  80% {
+    color: #000;
+  }
+  90% {
+    color: #fff;
+  }
+  100% {
+    color: #000;
+  }
+}
+
+
+.animate-colorChange {
+  display: inline;
+  animation: colorChange 100s ease-in-out infinite;
+
+}
+.animate-colorChange2 {
+  display: inline;
+  animation: colorChange 100s ease-in-out infinite;
+}
+
+.animate-colorChange3 {
+  display: inline;
+  animation: colorChange 100s ease-in-out infinite;
+}
+
+.animate-colorChange4 {
+  display: inline;
+  animation: colorChange 10s ease-in-out infinite;
+}
+
+@keyframes coolPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-coolPulse {
+  animation: coolPulse 50s ease-in-out infinite;
+}
+.coolPulse2 {
+  animation: coolPulse2 2s ease-in-out infinite;
+}
+
+@keyframes coolPulse3 {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.coolPulse3 {
+  animation: coolPulse3 2s ease-in-out infinite;
+}
+
+
+@keyframes turn {
+  to {
+      transform: rotate(calc(var(--offset) + 1turn));
+  }
+}
+
+.blur-container {
+  filter: blur(var(--blur));
+  height: 100vh;
+  width: 100%;
+  display: grid;
+}
+
+.blur-container > * {
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+}
+
+@keyframes move_wave {
+  0% {
+      transform: translateX(0) translateZ(0) scaleY(1)
+  }
+  50% {
+      transform: translateX(-25%) translateZ(0) scaleY(0.55)
+  }
+  100% {
+      transform: translateX(-50%) translateZ(0) scaleY(1)
+  }
+}
+.waveWrapper {
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  margin: auto;
+}
+.waveWrapperInner {
+  position: absolute;
+  width: 100%;
+  overflow: hidden;
+  height: 100%;
+  bottom: -1px;
+  background-image: linear-gradient(to top, #86377b 20%, #27273c 80%);
+}
+.bgTop {
+  z-index: 15;
+  opacity: 0.5;
+}
+.bgMiddle {
+  z-index: 10;
+  opacity: 0.75;
+}
+.bgBottom {
+  z-index: 5;
+}
+
+#webgl-background {
+  position: fixed; /* or 'absolute' */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Puts the canvas behind your content */
+}
+
+.webgl-canvas-container {
+  position: relative;
+}
+
+.webgl-canvas-container > canvas {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.webgl-canvas-container > div {
+  position: relative;
+  z-index: 2;
+  /* Additional styling as needed */
+}
+

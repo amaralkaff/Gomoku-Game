@@ -1,5 +1,6 @@
 //components/Board.jsx
 import "../index.css";
+import { useEffect } from "react";
 import { ref, onValue } from "firebase/database";
 import { database } from "../firebase/firebaseConfig";
 
@@ -46,18 +47,25 @@ function Board() {
     }
   };
 
+  useEffect(() => {
+    if (
+      (currPlayer === "p1" && turn % 2 === 0) ||
+      (currPlayer === "p2" && turn % 2 !== 0)
+    ) {
+      fetchDataFromFB();
+    }
+  }, [turn]);
+
   //
   const boardStyle =
-    "grid grid-cols-[repeat(15,1fr)] grid-rows-[repeat(15,1fr)] gap-1 w-[525px] h-[525px] transform rotate-x-[45deg] rotate-z-[45deg] shadow-xl";
-  const squareStyle = "border border-gray-400 rounded-full bg-wood-texture";
-  const pieceStyle = (piece) =>
-    ({
-      X: "bg-black w-6 h-6 rounded-full mx-auto mt-1 shadow-lg",
-      O: "bg-white w-6 h-6 rounded-full mx-auto mt-1 shadow-lg",
-    }[piece] || "");
+    "grid grid-cols-[repeat(15,1fr)] grid-rows-[repeat(15,1fr)] gap-1 w-[525px] h-[525px] transform rotate-x-[45deg] rotate-z-[45deg] shadow-xl bg-gray-300 rounded-[14.5px] relative z-0";
+  const squareStyle =
+    "border border-gray-400 rounded-full relative z-10 active:outline-none focus:outline-none";
+  const X = "bg-black w-6 h-6 rounded-full mx-auto mt-1 shadow-lg";
+  const O = "bg-white w-6 h-6 rounded-full mx-auto mt-1 shadow-lg";
 
   return (
-    <div className="perspective[1000px] perspective-origin[50% 50%] transition-transform duration-700 ease-in-out">
+    <div className="flex flex-col justify-center items-center">
       <div className={boardStyle}>
         {board.map((row, x) =>
           row.map((square, y) => (
@@ -68,7 +76,12 @@ function Board() {
               className={`${squareStyle} ${getPieceStyle(square)}`}
             >
               {square && (
-                <div className={pieceStyle(square)}>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  {square === "X" ? (
+                    <div className={X}></div>
+                  ) : (
+                    <div className={O}></div>
+                  )}
                   <span className="sr-only">{square}</span>
                 </div>
               )}
