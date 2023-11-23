@@ -12,8 +12,8 @@ import { ref, update } from "firebase/database";
 export default function Game() {
   // const isFinished = useSelector((state) => state.gomoku.isFinished);
   // const turn = useSelector((state) => state.gomoku.turn);
-  const { turn, isFinished, board, lastMoveByX, lastMoveByO, disabled } = useSelector((state) => state.gomoku);
-
+  const { turn, isFinished, board, lastMoveByX, lastMoveByO, disabled } =
+    useSelector((state) => state.gomoku);
 
   // check if connected
   function setStatusConnected(player) {
@@ -31,7 +31,7 @@ export default function Game() {
       // connected as player 2
       setStatusConnected("p2");
     }
-  })
+  });
 
   return (
     <>
@@ -43,14 +43,13 @@ export default function Game() {
               <Board />
             </div>
 
-
             {/* last 1/4 (sidebar) */}
             <div className="flex flex-col justify-center items-center">
               {isFinished && (
                 <>
                   <div className="flex justify-center items-center gap-5">
                     <h2 className="text-3xl font-bold text-gray-800 mb-3 mr-3">
-                      {turn == 0 ? "Black" : "White"} Won!
+                      {turn != 0 ? "Black" : "White"} Won!
                     </h2>
                     {/*<p className="text-3xl font-bold text-gray-800 mb-3 mr-3">
                       {turn == 0 ? "White" : "Black"} Lost!
