@@ -2,4 +2,4 @@
 
 all my homies hate firebase
 
-https://vercel.com/amangly6666/gomoku-game/2njPxREwt9idRWzCSjKEY1vxNZVh
+https://gomoku-game-mnaxpnrwq-amangly6666.vercel.app/
