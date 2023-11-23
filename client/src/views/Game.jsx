@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import Board from "../components/Board";
 // import WebGLCanvas from "../assets/test";
+import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 // redux
 import { useSelector } from "react-redux";
@@ -33,6 +35,15 @@ export default function Game() {
     }
   });
 
+  if (isFinished) {
+    // console.log(turn);
+    Swal.fire({
+      title: "Game Over",
+      text: `${turn % 2 == 0 ? "Black" : "White"} Won!`,
+      icon: "info",
+    });
+  }
+
   return (
     <>
       <div className="fixed top-0 left-0 w-screen h-screen z-0 bg-gradient-to-br from-gray-300 to-gray-600">
@@ -47,14 +58,18 @@ export default function Game() {
             <div className="flex flex-col justify-center items-center">
               {isFinished && (
                 <>
-                  <div className="flex justify-center items-center gap-5">
+                  {/* <div className="flex justify-center items-center gap-5">
                     <h2 className="text-3xl font-bold text-gray-800 mb-3 mr-3">
                       {turn != 0 ? "Black" : "White"} Won!
                     </h2>
-                    {/*<p className="text-3xl font-bold text-gray-800 mb-3 mr-3">
+                    <p className="text-3xl font-bold text-gray-800 mb-3 mr-3">
                       {turn == 0 ? "White" : "Black"} Lost!
-                    </p>*/}
-                  </div>
+                    </p>
+                  </div> */}
+
+                  <Link to="/">
+                    <button>back to home</button>
+                  </Link>
                 </>
               )}
             </div>
